@@ -1,14 +1,14 @@
 FROM oven/bun:debian
 
-# Set the non-interactive frontend flag
+# Set non-interactive frontend flag
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Copy the project to /home/app
+# Copy project /home/app
 COPY . /home/app
 
-# Go to the copied directory
+# Go to copied directory
 WORKDIR /home/app
 
-# Install node_modules, and build the project
+# Install node_modules, build project
 RUN bun install
-RUN bun run build
+RUN bun bun build
