@@ -12,6 +12,3 @@ WORKDIR /home/app
 # Install node_modules, and build the project
 RUN bun install
 RUN bun run build
-
-# Set entry command to "bun ."
-CMD ["bun", "."] 
