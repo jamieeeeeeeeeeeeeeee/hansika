@@ -11,4 +11,4 @@ WORKDIR /home/app
 
 # Install node_modules, build project
 RUN bun install
-RUN bun bun build
+RUN bun run build
