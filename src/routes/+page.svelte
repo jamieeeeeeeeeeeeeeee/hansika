@@ -1,13 +1,27 @@
 <script>
-    import { browser } from '$app/environment';
-    
-    if (browser) {
-        const websocket = new WebSocket('ws://' + window.location.host + '/ws');
-        websocket.onopen = () => {
-            console.log('Connected to websocket');
-        };
+    import Button from "$lib/components/Button.svelte";
+    import india from "$lib/assets/india.png";
+    import cluedo from "$lib/assets/cluedo.jpg";
+    import { goto } from "$app/navigation";
+
+    function redirect(link) {
+        goto(link);
     }
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<main>
+    <div class="grid">
+        <Button text="" img="cardthumb.png" type="img" callback={() => redirect("/cards")}/>
+        <Button text="" img={india} type="img" callback={() => redirect("/odia/vowels")}/>
+        <Button text="" img={cluedo} type="img" callback={() => redirect("/cluedo")}/>
+    </div>
+</main>
+
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+    }
+</style>
