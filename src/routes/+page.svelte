@@ -2,6 +2,7 @@
     import Button from "$lib/components/Button.svelte";
     import india from "$lib/assets/india.png";
     import cluedo from "$lib/assets/cluedo.jpg";
+    import remote from "$lib/assets/remote.jpg";
     import { goto } from "$app/navigation";
 
     function redirect(link) {
@@ -14,6 +15,7 @@
         <Button text="" img="cardthumb.png" type="img" callback={() => redirect("/cards")}/>
         <Button text="" img={india} type="img" callback={() => redirect("/odia/vowels")}/>
         <Button text="" img={cluedo} type="img" callback={() => redirect("/cluedo")}/>
+        <Button text="" img={remote} type="img" callback={() => redirect("/vnc")}/>
     </div>
 </main>
 
