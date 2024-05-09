@@ -7,7 +7,6 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Oriya:wght@100..900&family=Outfit:wght@100..900&family=Pacifico&display=swap" rel="stylesheet">
 
 		%sveltekit.head%
@@ -41,6 +40,12 @@
 
             header, footer {
                 padding: 0.64rem;
+            }
+
+            @media (max-width: 600px) {
+                html {
+                    font-size: 0.64rem;
+                }
             }
         </style>
 
