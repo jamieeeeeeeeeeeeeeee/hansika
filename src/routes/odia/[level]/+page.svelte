@@ -15,7 +15,9 @@
 
     export const levels = [
         "vowels",
-        "consonants"
+        "consonants",
+        "all-letters",
+        "greetings",
     ];
 
     const docs = {};
@@ -110,7 +112,7 @@
             });
             info.update((i) => {
                 return {
-                    info: "Correct!",
+                    info: "Correct! " + docs[$answer].t + " as in " + docs[$answer].e,
                     button: "NEXT",
                     color: "#046A38",
                     showing: true

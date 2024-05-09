@@ -6,8 +6,8 @@
 <div>
     <p>
         {($progress.done / ($progress.total + 0.0001) * 100).toFixed(0) + "%"}
-        {" (" + $progress.done + "/" + $progress.total + ");"}
-        {$progress.thisTime.toFixed(2) + "s / " + $progress.avgTime.toFixed(2) + "s"}
+        {" (" + $progress.done + "/" + $progress.total + ") "}
+        {$progress.avgTime.toFixed(2) + "s"}
     </p>
     <div
         id="indicator"

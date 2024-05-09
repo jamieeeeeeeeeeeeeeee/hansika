@@ -1,0 +1,8 @@
+{
+    "ନମସ୍କାର": {"t": "Hello", "e": "namaskāra"},
+    "ସୁପ୍ରଭାତ": {"t": "Good morning", "e": "suprabhāta"},
+    "ଶୁଭ ସନ୍ଧ୍ୟା": {"t": "Good evening", "e": "śubha sandhyā"},
+    "ଶୁଭ ରାତ୍ରି": {"t": "Good night", "e": "śubha rātri"},
+    "ଆପଣ କେମିତି ଅଛନ୍ତି": {"t": "How are you", "e": "āpaṇa kemiti achanti"},
+    "ଧନ୍ୟବାଦ": {"t": "Thank you", "e": "dhanyavāda"}
+}
