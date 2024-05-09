@@ -6,7 +6,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "vite build && bun ."
+    "start": "vite build && bun -b ."
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.0.0",
