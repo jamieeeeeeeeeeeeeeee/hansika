@@ -2,6 +2,7 @@
     import Button from "$lib/components/Button.svelte";
     import Entry from "$lib/components/Entry.svelte";
     import { browser } from '$app/environment';
+    import { onMount, onDestroy } from "svelte";
 
     let screen = "join";
     let joinableRooms = [];
@@ -10,37 +11,72 @@
         mode: "",
         users: [],
     }
+    let websocket;
     let username;
 
-    
-    if (browser) {
-        const websocket = new WebSocket('ws://' + window.location.host + '/ws');
-        websocket.onopen = () => {
-            console.log('Connected to websocket');
-        };
+    const sendMessage = (type, data) => {
+        if (checkWebsocket()) {
+            websocket.send(JSON.stringify({ type, data }));
+        }
     }
 
-    /*function createRoom() {
-        ws.emit("create", username, "trumps");
+    function checkWebsocket() {
+        if (websocket === undefined) {
+            console.error("Websocket never existed");
+        } else if (websocket.readyState === WebSocket.CLOSED) {
+            console.error("Websocket closed, reconnecting");
+            websocket = new WebSocket('ws://' + window.location.host + '/ws');
+        } else if (websocket.readyState === WebSocket.CONNECTING) {
+            console.error("Websocket connecting");
+        } else if (websocket.readyState === WebSocket.OPEN) 
+        return true; return false;
+    }
+
+    onMount(() => {
+        if (browser) {
+            websocket = new WebSocket('ws://' + window.location.host + '/ws');
+            websocket.onopen = () => {
+                console.log('Connected to websocket');
+            };
+
+            websocket.onmessage = (event) => {
+                const { type, data } = JSON.parse(event.data);
+                switch (type) {
+                    case "rooms":
+                        joinableRooms = data;
+                        break;
+                    case "room":
+                        room = data;
+                        screen = "room";
+                        break;
+                    case "game":
+                        room = data;
+                        screen = "game";
+                        break;
+                    default:
+                        console.error("Unknown message type: " + type);
+                }
+            };
+
+            websocket.onclose = () => {
+                console.error('Websocket disconnected');
+            };
+        }
+    });
+
+    onDestroy(() => {
+        if (websocket !== undefined) {
+            websocket.close();
+        }
+    });
+
+    function createRoom() {
+        sendMessage("create", { user: username, mode: "trumps" });
     }
 
     function joinRoom(roomId) {
-        ws.emit("join", roomId, username);
+        sendMessage("join", { room: roomId, username: username });
     }
-
-    ws.on("joinableRooms", (rooms) => {
-        joinableRooms = rooms;
-    });
-
-    ws.on("room", (resp) => {
-        console.log(resp);
-        if (resp.status == 201) { // Resource created
-            room = resp.body.room;
-            user = resp.body.user;
-            host = resp.body.host;
-            screen = "room";
-        }
-    });*/
 </script>
 
 <main>
@@ -49,7 +85,7 @@
         <div class="responsive">
             <div class="flex">
                 <Entry text="Username" bind:value={username}/>
-                <Button type="good" text="Create A Game"/>        
+                <Button type="good" text="Create A Game" callback={createRoom}/>        
             </div>
             <div class="hr">OR</div>
             <div class="flex">
