@@ -8,8 +8,7 @@
 </script>
 
 <div
-    class="button button-{type}"
-    style={img != "" ? "" : "padding: 0.2em 0;"}
+    class={`button button-${type} ${img ? 'button-img' : ''}`}
     tabindex="0"
     on:click={callback}
     on:keydown={(e) => {
@@ -19,8 +18,10 @@
     }}
     role="button"
 >
-    {#if img != ""}
-        <img src={img} alt={text} />
+    {#if img}
+        <div class="image-container">
+            <img src={img} alt={text} />
+        </div>
     {:else}
         <div>
             { text }
@@ -31,7 +32,6 @@
 <style>
     .button {
         font-family: 'Roboto', sans-serif;
-        overflow: hidden;
         border: 3px solid grey;
         border-bottom-width: 5px;
         border-radius: 0.5em;
@@ -41,17 +41,43 @@
         display: flex;
         justify-content: space-between;
         font-weight: 600;
+        width: 100%;
         transition: scale 0.2s ease-in;
         flex-direction: row;
         align-items: center;
         text-align: top;
         transition: all 0.1s ease-in-out;
-        width: 100%;
         max-width: 768px;
         user-select: none;
         -moz-user-select: none;
         -webkit-user-select: none;
         touch-action: manipulation;
+    }
+
+    .button-img {
+        height: 15vw;
+        border: none;
+        padding: 0;
+        background-color: transparent;
+    }
+
+    .button-img > .image-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button-img > .image-container > img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0.5em;
+    }
+
+    .button:active {
+        scale: 0.98;
     }
 
     .button-good {
@@ -64,39 +90,27 @@
         color: white;
     }
 
-    .button-select {
-        background-color: #06038D;
-        border-color: #06038D;
-    }
-
-    .button-select > div {
-        color: white;
-    }
-
-    .button:active {
-        scale: 0.98;
-        transition: scale 0.2s ease-out;
-    }
-
     .button > div {
         text-align: center;
         width: 100%;
     }
 
-    .button-img > img{
-        height: 33vw;
-        
-        border-radius: 0.5em;
-        transition: all 0.1s ease-in-out;
+    .button-select {
+        background-color: #06038D;
+        border-color: #06038D;
     }
 
-    .button-img  {
-        align-items: center;
-        justify-content: center;
-        background-color: transparent;
-        border: none;
-        max-width: 100%;
-        object-fit: cover;
-
+    .button-good > div, .button-select > div {
+        color: white;
+    }
+    @media (max-width: 900px) {
+        .button-img {
+            height: 20vw; 
+        }
+    }
+    @media (max-width: 600px) {
+        .button-img {
+            height: 30vw; 
+        }
     }
 </style>
