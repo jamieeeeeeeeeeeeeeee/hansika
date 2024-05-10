@@ -1,49 +1,54 @@
 <script>
     import { page } from "$app/stores";
+    import hr from "$lib/assets/hr.png";
 </script>
 <header>
-    <a id="HR" href="/">H</a>
+    <div>
+        <a href="/">
+            <img id="HR" src={hr} alt="HR"/>
+        </a>
+    </div>
+    <div class="HROFFSET"></div>
     <slot name="navbar"/>
     <div id="title">{$page.url.pathname}</div>
 </header>
 
 <style>
- header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: white;
- }
-
- #HR {
-    font-family: 'Pacifico', cursive;
-    cursor: pointer;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    text-decoration: none;
-    color: black;
- }
-
- #HR:after {
-    content: "ansika Ray";
- }
-
- #title {
-    font-weight: bold;
- }
-
- @media (max-width: 768px) {
-    #HR:after {
-        content: "R";
+    img {
+        width: 5rem;
+        height: 5rem;
     }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        position: relative;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    #HR {
+        font-family: 'Pacifico', cursive;
+        cursor: pointer;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        text-decoration: none;
+        color: black;
+    }
+
 
     #title {
-        display: none;
+        font-weight: bold;
     }
- }
+
+    @media (max-width: 768px) {
+
+
+    }
 </style>

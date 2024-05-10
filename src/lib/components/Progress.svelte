@@ -32,7 +32,7 @@
         flex-direction: row;
         align-content: center;
         flex-grow: 1;
-        height: 100%;
+        height: 2.4rem;
         background-color: rgb(229, 229, 229);
         margin: 0 2rem;
         border-radius: 1rem;

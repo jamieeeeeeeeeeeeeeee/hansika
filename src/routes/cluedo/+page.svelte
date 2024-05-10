@@ -49,11 +49,36 @@
         randomWeapon = "";
         randomRoom = "";
     }
+
+    let numPlayers = 1;
+    function setNumPlayers(num) {
+        numPlayers = num
+    }
 </script>
 
 <main>
     <div class="navbar">
-        <h1>Cluedo</h1>
+        <div class="navbar">
+            <button 
+            class="spinner"
+            on:click={() => setNumPlayers(numPlayers - 1)}
+            >-</button>
+            <input 
+            type="number" 
+            min="1" 
+            max="4" 
+            bind:value={numPlayers}
+            />
+            <button 
+            class="spinner"
+            on:click={() => setNumPlayers(numPlayers + 1)}
+            >+</button>
+        </div>
+        <div>
+            {#each Array(numPlayers) as _}
+                <input type="text"/>
+            {/each}
+        </div>
         <div>
             <button on:click={() => {cluedoHideAll.update((v) => !v);}}>HIDE</button>
             <button on:click={clearAll}>CLEAR</button>
@@ -68,24 +93,40 @@
             <div>
                 <h3 class="remove">Guests</h3>
                 {#each guests as guest}
-                    <Checkbox text={guest} />
+                    <div class="item">
+                        {#each Array(numPlayers) as _}
+                            <Checkbox/>
+                        {/each}
+                        {guest}
+                    </div>
                 {/each}
             </div>
             <div>
                 <h3>Weapons</h3>
                 {#each weapons as weapon}
-                    <Checkbox text={weapon} />
+                    <div class="item">
+                        {#each Array(numPlayers) as _}
+                            <Checkbox/>
+                        {/each}
+                        {weapon}
+                    </div>
                 {/each}
             </div>
         </div>
         <div>
             <h3>Rooms</h3>
             {#each rooms as room}
-                <Checkbox text={room} />
+                <div class="item">
+                    {#each Array(numPlayers) as _}
+                        <Checkbox/>
+                    {/each}
+                    {room}
+                </div>
             {/each}
         </div>
     </div>
 </main>
+<div class="item"><div class="item"></div></div>
 
 <style>
     .navbar {
@@ -116,12 +157,6 @@
         margin: 0 1rem;
     }
 
-    @media (max-width: 600px) {
-        main {
-            font-size: 1.4rem;
-        }
-    }
-
     button {
         background-color: white;
         color: black;
@@ -130,5 +165,55 @@
         padding: 0.5em;
         cursor: pointer;
         touch-action: manipulation;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0.15em;
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+    }
+
+    input[type=number] {
+        margin: 0;
+        border: none;
+        border-radius: 0.5em;
+        padding: 0.5em;
+        width: 3em;
+        text-align: center;
+        font-size: 1rem;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        height: 1.5rem;
+    }
+
+    .spinner {
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: 0.5em;
+        cursor: pointer;
+        touch-action: manipulation;
+        margin: 0 2px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button {
+        opacity: 0;
+        appearance: none;
+    }
+
+    input[type=text] {
+        margin: 0 1px;
+        border: none;
+        border-radius: 0.5em;
+        padding: 0.5em;
+        width: 1rem;
+        text-align: center;
+        font-size: 1rem;
     }
 </style>
