@@ -9,4 +9,5 @@ const progress = writable({
 
 const options = writable([]);
 const selectedOptions = writable(new Set());
-export { progress, options, selectedOptions };
+const cluedoHideAll = writable(false);
+export { progress, options, selectedOptions, cluedoHideAll};
