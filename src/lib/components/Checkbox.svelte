@@ -1,5 +1,6 @@
 <script>
-    import { cluedoHideAll } from "$lib/store.js";
+    import { cluedoHideAll, cluedoClearAll } from "$lib/store.js";
+    import { onDestroy } from "svelte";
     export let text = "";
 
     let checkBoxText = "";
@@ -12,6 +13,14 @@
             checkBoxText = "";
         }
     }
+
+    const unsub = cluedoClearAll.subscribe((v) => {
+        checkBoxText = "";
+    });
+
+    onDestroy(() => {
+        unsub();
+    });
 </script>
 
 <div>
@@ -23,14 +32,20 @@
         >
             {$cluedoHideAll ? '' : checkBoxText}
         </button>
-        {text}
+        <div>
+            {text}
+        </div>
     </label>
 </div>
 
 <style>
     .checkbox {
-        width: 1em;
-        height: 1em;
+        width: 15px;
+        height: 15px;
+        min-width: 15px;
+        min-height: 15px;
+        max-width: 15px;
+        max-height: 15px;
         border: 2px solid black;
         border-radius: 0.25em;
         background-color: white;
@@ -40,12 +55,20 @@
         align-items: center;
         display: flex;
         justify-content: center;
-        margin-right: 0.5em;
+        min-width: 15px;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
     }
 
     label {
         display: flex;
         align-items: center;
         flex-direction: row;
+        touch-action: manipulation;
+    }
+
+    label > div {
+        margin-left: 0.5em;
     }
 </style>

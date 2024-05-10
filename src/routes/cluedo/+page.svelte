@@ -1,6 +1,6 @@
 <script>
     import Checkbox from "$lib/components/Checkbox.svelte";
-    import { cluedoHideAll } from "$lib/store.js";
+    import { cluedoHideAll, cluedoClearAll } from "$lib/store.js";
     const guests = [
         "Mustard",
         "Plum",
@@ -42,6 +42,13 @@
         randomWeapon = weapons[Math.floor(Math.random() * weapons.length)];
         randomRoom = rooms[Math.floor(Math.random() * rooms.length)];    
     }
+    function clearAll() {
+        cluedoClearAll.update((v) => !v); 
+        cluedoHideAll.set(false);
+        randomGuest = "";
+        randomWeapon = "";
+        randomRoom = "";
+    }
 </script>
 
 <main>
@@ -49,8 +56,8 @@
         <h1>Cluedo</h1>
         <div>
             <button on:click={() => {cluedoHideAll.update((v) => !v);}}>HIDE</button>
+            <button on:click={clearAll}>CLEAR</button>
             <button on:click={randomGuess}>RANDOM</button>
-    
         </div>
     </div>
     <div class="navbar">
@@ -111,11 +118,10 @@
 
     @media (max-width: 600px) {
         main {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
     }
 
-    /* make button look nice*/
     button {
         background-color: white;
         color: black;
@@ -123,5 +129,6 @@
         border-radius: 0.5em;
         padding: 0.5em;
         cursor: pointer;
+        touch-action: manipulation;
     }
 </style>
