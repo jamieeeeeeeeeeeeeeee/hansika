@@ -59,6 +59,7 @@
 <main>
     <div class="navbar">
         <div class="navbar">
+            <button id="clear" on:click={clearAll}>CLEAR</button>
             <button 
             class="spinner"
             on:click={() => setNumPlayers(numPlayers - 1)}
@@ -80,8 +81,7 @@
             {/each}
         </div>
         <div>
-            <button on:click={() => {cluedoHideAll.update((v) => !v);}}>HIDE</button>
-            <button on:click={clearAll}>CLEAR</button>
+            <button on:click={() => {cluedoHideAll.update((v) => !v);}}>{$cluedoHideAll ? "SHOW" : "HIDE"}</button>
             <button on:click={randomGuess}>RANDOM</button>
         </div>
     </div>
@@ -129,6 +129,9 @@
 <div class="item"><div class="item"></div></div>
 
 <style>
+    #clear {
+        margin-right: 1rem;
+    }
     .navbar {
         display: flex;
         justify-content: center;
@@ -197,8 +200,7 @@
         cursor: pointer;
         touch-action: manipulation;
         margin: 0 2px;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding: 0.5em 0.75em;
     }
     
     input[type=number]::-webkit-inner-spin-button, 
