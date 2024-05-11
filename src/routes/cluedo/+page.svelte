@@ -214,7 +214,7 @@
         border: none;
         border-radius: 0.5em;
         padding: 0.5em;
-        width: 1rem;
+        width: 2rem;
         text-align: center;
         font-size: 1rem;
     }
