@@ -1,86 +1,59 @@
 <script>
     import Button from "$lib/components/Button.svelte";
     import Entry from "$lib/components/Entry.svelte";
-    import { browser } from '$app/environment';
+    
     import { onMount, onDestroy } from "svelte";
-
-    let screen = "join";
+    import { ws, check, send } from "$lib/websocket.js";
+    import { goto } from "$app/navigation";
     let joinableRooms = [];
-    let room = {
-        id: "",
-        mode: "",
-        users: [],
-    }
-    let websocket;
     let username;
 
-    const sendMessage = (type, data) => {
-        if (checkWebsocket()) {
-            websocket.send(JSON.stringify({ type, data }));
-        }
-    }
-
-    function checkWebsocket() {
-        if (websocket === undefined) {
-            console.error("Websocket never existed");
-        } else if (websocket.readyState === WebSocket.CLOSED) {
-            console.error("Websocket closed, reconnecting");
-            websocket = new WebSocket('ws://' + window.location.host + '/ws');
-        } else if (websocket.readyState === WebSocket.CONNECTING) {
-            console.error("Websocket connecting");
-        } else if (websocket.readyState === WebSocket.OPEN) 
-        return true; return false;
-    }
 
     onMount(() => {
-        if (browser) {
-            websocket = new WebSocket('ws://' + window.location.host + '/ws');
-            websocket.onopen = () => {
+        if (check()) {
+            ws.onopen = () => {
                 console.log('Connected to websocket');
             };
 
-            websocket.onmessage = (event) => {
+            ws.onmessage = (event) => {
                 const { type, data } = JSON.parse(event.data);
                 switch (type) {
                     case "rooms":
                         joinableRooms = data;
                         break;
                     case "room":
-                        room = data;
-                        screen = "room";
-                        break;
-                    case "game":
-                        room = data;
-                        screen = "game";
+                        goto(`/cards/${data.room.id}?host=yes`);
                         break;
                     default:
                         console.error("Unknown message type: " + type);
                 }
             };
 
-            websocket.onclose = () => {
+            ws.onclose = () => {
                 console.error('Websocket disconnected');
             };
         }
     });
 
     onDestroy(() => {
-        if (websocket !== undefined) {
-            websocket.close();
+        if (ws) {
+            // unbind events
+            ws.onopen = null;
+            ws.onmessage = null;
+            ws.onclose = null;
         }
     });
 
     function createRoom() {
-        sendMessage("create", { user: username, mode: "trumps" });
+        send("create", { user: username, mode: "trumps" });
     }
 
     function joinRoom(roomId) {
-        sendMessage("join", { room: roomId, username: username });
+        send("join", { room: roomId, username: username });
     }
 </script>
 
 <main>
-    {#if screen == "join"}
     <div id="join">
         <div class="responsive">
             <div class="flex">
@@ -105,38 +78,20 @@
                         <div class="game-info">
                             <span>{game.id}</span>
                             <span>-</span>
-                            <span>{game.players.length} players</span>
+                            <span>{game.users.length} players</span>
                         </div>
                         <div class="game-players">
-                            {#each game.players as player}
+                            {#each game.users as player}
                             <span>{player}</span>
                             {/each}
                         </div>
+                        <button on:click={() => joinRoom(game.id)}>Join</button>
                     </div>
                     {/each}
                 </div>    
             </div>
         </div>
     </div>
-    {:else if screen == "room"}
-    <div id="room">
-        <h1>Room {room.id}</h1>
-        <div id="players">
-            {#each room.users as player}
-            <div>{player}</div>
-            {/each}
-        </div>  
-    </div>
-    {:else if screen == "game"}
-    <div id="game">
-        <h1>Game {room.id}</h1>
-        <div id="players">
-            {#each room.users as player}
-            <div>{player}</div>
-            {/each}
-        </div>
-    </div>
-    {/if}
 </main>
 
 <style>
