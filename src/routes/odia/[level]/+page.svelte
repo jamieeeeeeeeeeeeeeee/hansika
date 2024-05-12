@@ -243,7 +243,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 1rem;
-        height: 3vh;
+        height: 5vh;
         background-color: white;
     }
 
