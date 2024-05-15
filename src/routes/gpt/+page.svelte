@@ -78,7 +78,7 @@
             }
 
             if (currentText) {
-                codeBlocks.push({ lang: null, txt: currentText.trim().replace('\n', '<br><br>') });
+                codeBlocks.push({ lang: null, txt: currentText.trim().replaceAll('\n', '<br><br>') });
                 currentText = '';
             }
 
@@ -97,7 +97,7 @@
         }
 
         if (currentText) {
-            codeBlocks.push({ lang: null, txt: currentText.trim().replace('\n', '<br><br>') });
+            codeBlocks.push({ lang: null, txt: currentText.trim().replaceAll('\n', '<br><br>') });
         }
 
         console.log(codeBlocks);
