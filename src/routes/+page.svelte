@@ -4,6 +4,7 @@
     import cluedo from "$lib/assets/cluedo.jpg";
     import remote from "$lib/assets/remote.jpg";
     import gpt from "$lib/assets/gpt.png";
+    import logger from "$lib/assets/logger.png";
     import { goto } from "$app/navigation";
 
     function redirect(link) {
@@ -17,7 +18,8 @@
         <Button text="" img={india} type="img" callback={() => redirect("/odia/vowels")}/>
         <Button text="" img={cluedo} type="img" callback={() => redirect("/cluedo")}/>
         <Button text="" img={remote} type="img" callback={() => redirect("/vnc")}/>
-        <Button text="" img={gpt} type="img" callback={() => redirect("/gpt")}/>
+        <Button text="" img={gpt} type="img" callback={() => redirect("/gpt")}/>    
+        <Button text="" img={logger} type="img" callback={() => redirect("/logger")}/>
     </div>
 </main>
 
