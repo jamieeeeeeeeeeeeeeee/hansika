@@ -266,6 +266,7 @@
         outline: none;
         resize: auto;
         padding-left: 1.25rem;
+        height: 10rem;
     }
 
     #input textarea::placeholder {
