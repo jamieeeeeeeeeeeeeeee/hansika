@@ -32,7 +32,7 @@
         }
     });
 
-    const messages = [];
+    let messages = [];
     let message = "";
     let messageDiv;
 
@@ -51,6 +51,11 @@
             let chunk = msg.choices[0]?.delta?.content;
             if (chunk) messages[messages.length - 1].content += chunk;
         }
+    }
+
+    function clear() {
+        messages.push({ role: "assistant", content: "Clearing chat..." });
+        messages = [];
     }
 
     afterUpdate(() => {
@@ -112,7 +117,13 @@
     <div id="terminal">
         <div id="header">
             <div id="circlerow">
-                <div class="circle red"></div>
+                <div
+                class="circle red"
+                on:click={clear}
+                role="button"
+                tabindex="0"
+                on:keydown={(e) => e.key === "Enter" && clear()}
+                 >X</div>
                 <div class="circle yellow"></div>
                 <div class="circle green"></div>    
             </div>
@@ -139,6 +150,7 @@
                             {role === "user" ? '> ' : ''}{content}
                         {/if}
                     </div>
+                    <br>
                 </div>
             {/each}
             <div id="input" 
@@ -195,6 +207,12 @@
 
     .red {
         background-color: #ff5f56;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        align-items: center;
+        display: flex;
+        justify-content: center;
     }
 
     .yellow {
@@ -246,7 +264,7 @@
         font-family: "Courier New", Courier, monospace;
         border: none;
         outline: none;
-        resize: none;
+        resize: auto;
         padding-left: 1.25rem;
     }
 
